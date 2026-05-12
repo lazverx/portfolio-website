@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 const ITEMS = [
   { id: "i", badge: "I", title: "EDUCATION", subtitle: "Vocational School / Coursework", rank: 3 },
-  { id: "ii", badge: "II", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
-  { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured Work", rank: 5 },
-  { id: "iv", badge: "IV", title: "EXPERIENCE", subtitle: "Internships / Roles", rank: 2 },
+  { id: "ii", badge: "II", title: "SKILLS", subtitle: "Cyber Security / Back-End / Automation", rank: 4 },
+  { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Readify", rank: 5 },
+  { id: "iv", badge: "IV", title: "EXPERIENCE", subtitle: "Clevio Technical Team", rank: 2 },
 ];
 
 const EDUCATION_ROWS = [
   { index: "01", title: "General Education", status: "In Progress" },
-  { index: "02", title: "Computer Science Core", status: "In Progress" },
+  { index: "02", title: "Software Engineering Core", status: "In Progress" },
   { index: "03", title: "Elective Track", status: "Queued" },
   { index: "04", title: "Capstone Prep", status: "Queued" },
 ];

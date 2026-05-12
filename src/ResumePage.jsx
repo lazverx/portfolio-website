@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ITEMS = [
-  { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Coursework", rank: 3 },
+  { id: "i", badge: "I", title: "EDUCATION", subtitle: "Vocational School / Coursework", rank: 3 },
   { id: "ii", badge: "II", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
   { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured Work", rank: 5 },
   { id: "iv", badge: "IV", title: "EXPERIENCE", subtitle: "Internships / Roles", rank: 2 },
 ];
 
 const EDUCATION_ROWS = [
-  { index: "01", title: "General Education", status: "Complete" },
+  { index: "01", title: "General Education", status: "In Progress" },
   { index: "02", title: "Computer Science Core", status: "In Progress" },
   { index: "03", title: "Elective Track", status: "Queued" },
-  { index: "04", title: "Capstone Prep", status: "Pending" },
+  { index: "04", title: "Capstone Prep", status: "Queued" },
 ];
 
 export default function ResumePage({ src }) {
@@ -456,9 +456,9 @@ export default function ResumePage({ src }) {
             <div className="resume-detail-bottom">
               <div className="resume-detail-bottom-title">DETAILS</div>
               <div className="resume-detail-bullets">
-                <div className="resume-detail-bullet">- Maintain progress across required classes and supporting work.</div>
-                <div className="resume-detail-bullet">- Track portfolio-ready projects tied to coursework and labs.</div>
-                <div className="resume-detail-bullet">- Keep materials prepared for internships, research, and review.</div>
+                <div className="resume-detail-bullet">- Building software and many projects through daily practice and experimentation.</div>
+                <div className="resume-detail-bullet">- Exploring UI/UX, creative coding, and educational game development for impactful experiences.</div>
+                <div className="resume-detail-bullet">- Preparing long-term goals including internships, international opportunities, and German language studies.</div>
               </div>
             </div>
           </div>

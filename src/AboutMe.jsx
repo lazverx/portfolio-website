@@ -21,13 +21,13 @@ const REVEAL_CONTENT = [
   },
   {
     upper: [
-      "I’m weirdly good at multiple rhythm games — once I lock into the timing, muscle memory just takes over. My favorite UTAU character is Kasane Teto, and lately I’ve been listening to a lot of Lucy Bedroque while coding or working on projects.",
+      "I’m weirdly good at multiple rhythm games,and currently i really fw lucy bedroque",
     ],
     lower: "Fun facts about me",
   },
   {
     upper: [
-      "I’m constantly wiring together completely different skill trees at the same time — studying German for my Ausbildung goal, learning Python, and experimenting with music production in FL Studio. My brain gets addicted to progression systems, whether it’s language levels, cleaner code, or better sound design..",
+      "I’m constantly wiring together completely different skill trees at the same time,studying German for my Ausbildung goal, learning Cyber Security, and experimenting with music production in FL Studio. My brain gets addicted to progression systems, whether it’s language levels, cleaner code, or better sound design..",
     ],
     lower: "Wired facts about me",
   },

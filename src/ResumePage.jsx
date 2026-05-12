@@ -457,7 +457,7 @@ export default function ResumePage({ src }) {
               <div className="resume-detail-bottom-title">DETAILS</div>
               <div className="resume-detail-bullets">
                 <div className="resume-detail-bullet">- Building software and many projects through daily practice and experimentation.</div>
-                <div className="resume-detail-bullet">- Exploring UI/UX, creative coding, and educational game development for impactful experiences.</div>
+                <div className="resume-detail-bullet">- Exploring UI/UX, creative coding, and Cyber Security for impactful experiences.</div>
                 <div className="resume-detail-bullet">- Preparing long-term goals including internships, international opportunities, and German language studies.</div>
               </div>
             </div>

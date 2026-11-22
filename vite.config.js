@@ -147,8 +147,10 @@ export const VIDEO_URLS = { home, about, resume, socials };\n`
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const mediaBaseUrl = (env.VITE_MEDIA_BASE_URL || '').trim()
+  const base = process.env.GITHUB_ACTIONS === 'true' ? '/portfolio-website/' : '/'
 
   return {
+    base,
     plugins: [react(), createMediaPlugin(mediaBaseUrl)],
     build: {
       cssCodeSplit: true,

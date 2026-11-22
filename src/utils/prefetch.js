@@ -1,8 +1,10 @@
+const BASE = import.meta.env.BASE_URL
+
 export const POSTER_URLS = {
-  home: '/posters/home.webp',
-  about: '/posters/about.webp',
-  resume: '/posters/resume.webp',
-  socials: '/posters/socials.webp',
+  home: `${BASE}posters/home.webp`,
+  about: `${BASE}posters/about.webp`,
+  resume: `${BASE}posters/resume.webp`,
+  socials: `${BASE}posters/socials.webp`,
 }
 
 const ROUTE_IMPORTERS = {

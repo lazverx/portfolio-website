@@ -22,9 +22,9 @@ const ROLES = [
 const ITEMS = [
   {
     id: 'twitch',
-    label: 'TWITCH',
-    handle: '@yourname',
-    href: 'https://twitch.tv/lazfrustrante',
+    label: 'TWITTER',
+    handle: '@lazverx',
+    href: 'https://x.com/lazverx',
     icon: '🎮',
     barIcon: icon1,
     bars: 1,
@@ -32,14 +32,14 @@ const ITEMS = [
     counts: ['56'],
     links: ['twitch.tv/videos/2041837265'],
     stats: [
-      { tag: 'FOL', value: '1.2K', color: '#9147ff' },
+      { tag: 'FOL', value: '51', color: '#9147ff' },
       { tag: 'VWR', value: '042', color: '#bf94ff' },
     ],
   },
   {
     id: 'instagram',
     label: 'INSTAGRAM',
-    handle: '@yourhandle',
+    handle: '@lazfrust',
     href: 'https://instagram.com/lazfrust',
     icon: '📷',
     barIcon: icon2,
@@ -54,15 +54,15 @@ const ITEMS = [
       'instagram.com/reel/C0tImYpKg4c',
     ],
     stats: [
-      { tag: 'FOL', value: '3.4K', color: '#e1306c' },
+      { tag: 'FOL', value: '66', color: '#e1306c' },
       { tag: 'PST', value: '128', color: '#f77737' },
     ],
   },
   {
     id: 'tiktok',
-    label: 'TIKTOK',
+    label: 'OSU',
     handle: '@yourhandle',
-    href: 'https://tiktok.com/@0xf0000ull',
+    href: 'https://v4rx.me/user/profile.php/?id=106',
     icon: '🎵',
     barIcon: icon3,
     bars: 7,
@@ -78,8 +78,8 @@ const ITEMS = [
       'tiktok.com/@yourhandle/video/7237294018463851822',
     ],
     stats: [
-      { tag: 'FOL', value: '8.9K', color: '#00f2ea' },
-      { tag: 'LKS', value: '52K', color: '#ff0050' },
+      { tag: 'RNK', value: '40', color: '#00f2ea' },
+      { tag: 'PP', value: '22K', color: '#ff0050' },
     ],
   },
 ]

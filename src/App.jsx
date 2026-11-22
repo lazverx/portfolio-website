@@ -12,9 +12,20 @@ const Socials = lazy(() => import('./Socials'))
 
 function MenuScreen() {
   const navigate = useNavigate()
+  const handleNavigate = (page) => {
+    if (page === 'github') {
+      window.open('https://github.com/lazverx', '_blank', 'noopener,noreferrer')
+      return
+    }
+    if (page === 'sideproj') {
+      navigate('/resume', { state: { tab: 2 } })
+      return
+    }
+    navigate(`/${page}`)
+  }
   return (
     <div id="menu-screen">
-      <P3Menu onNavigate={(page) => navigate(`/${page}`)} />
+      <P3Menu onNavigate={handleNavigate} />
     </div>
   )
 }

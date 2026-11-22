@@ -10,6 +10,7 @@ export const POSTER_URLS = {
 const ROUTE_IMPORTERS = {
   about: () => import('../AboutMe'),
   resume: () => import('../ResumePage'),
+  sideproj: () => import('../ResumePage'),
   socials: () => import('../Socials'),
 }
 

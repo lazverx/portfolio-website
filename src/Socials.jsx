@@ -21,19 +21,20 @@ const ROLES = [
 
 const ITEMS = [
   {
-    id: 'twitch',
+    id: 'twitter',
     label: 'TWITTER',
     handle: '@lazverx',
     href: 'https://x.com/lazverx',
     icon: '🎮',
     barIcon: icon1,
-    bars: 1,
-    newBars: [0],
-    counts: ['56'],
-    links: ['twitch.tv/videos/2041837265'],
     stats: [
       { tag: 'FOL', value: '51', color: '#9147ff' },
-      { tag: 'VWR', value: '042', color: '#bf94ff' },
+      { tag: 'ID', value: 'LAZ', color: '#bf94ff' },
+    ],
+    entries: [
+      { label: '@lazverx', url: 'https://x.com/lazverx', tag: 'OPEN', value: 'X', isNew: true },
+      { label: 'media', url: 'https://x.com/lazverx/media', tag: 'FEED', value: 'MEDIA' },
+      { label: 'replies', url: 'https://x.com/lazverx/with_replies', tag: 'FEED', value: 'POSTS' },
     ],
   },
   {
@@ -43,43 +44,29 @@ const ITEMS = [
     href: 'https://instagram.com/lazfrust',
     icon: '📷',
     barIcon: icon2,
-    bars: 5,
-    newBars: [1, 2],
-    counts: ['3.4M', '2.5M', '676K', '412K', '198K'],
-    links: [
-      'instagram.com/p/C4xQmRrNk2a',
-      'instagram.com/p/C3wLpBsOj7f',
-      'instagram.com/reel/C2vKoArMi6e',
-      'instagram.com/p/C1uJnZqLh5d',
-      'instagram.com/reel/C0tImYpKg4c',
-    ],
     stats: [
       { tag: 'FOL', value: '66', color: '#e1306c' },
-      { tag: 'PST', value: '128', color: '#f77737' },
+      { tag: 'IG', value: 'MAIN', color: '#f77737' },
+    ],
+    entries: [
+      { label: '@lazfrust', url: 'https://instagram.com/lazfrust', tag: 'OPEN', value: 'IG', isNew: true },
+      { label: 'reels', url: 'https://instagram.com/lazfrust/reels', tag: 'FEED', value: 'REELS' },
     ],
   },
   {
-    id: 'tiktok',
+    id: 'osu',
     label: 'OSU',
-    handle: '@yourhandle',
+    handle: 'v4rx #40',
     href: 'https://v4rx.me/user/profile.php/?id=106',
     icon: '🎵',
     barIcon: icon3,
-    bars: 7,
-    newBars: [0, 3, 5, 6],
-    counts: ['5.1M', '3.7M', '2.2M', '1.4M', '831K', '490K', '217K'],
-    links: [
-      'tiktok.com/@yourhandle/video/7318492016374859054',
-      'tiktok.com/@yourhandle/video/7305837261940183342',
-      'tiktok.com/@yourhandle/video/7291046385720348974',
-      'tiktok.com/@yourhandle/video/7278392047163820334',
-      'tiktok.com/@yourhandle/video/7264819203847165742',
-      'tiktok.com/@yourhandle/video/7251047382916430126',
-      'tiktok.com/@yourhandle/video/7237294018463851822',
-    ],
     stats: [
       { tag: 'RNK', value: '40', color: '#00f2ea' },
       { tag: 'PP', value: '22K', color: '#ff0050' },
+    ],
+    entries: [
+      { label: 'v4rx profile', url: 'https://v4rx.me/user/profile.php/?id=106', tag: 'RANK', value: '#40', isNew: true },
+      { label: 'v4rx leaderboard', url: 'https://v4rx.me/leaderboard', tag: 'PP', value: '22K' },
     ],
   },
 ]
@@ -98,6 +85,11 @@ export default function Socials() {
     stateRef.current = { active, activeInfoBar, focus }
   }, [active, activeInfoBar, focus])
 
+  const selectPlatform = (index) => {
+    setActive(index)
+    setActiveInfoBar(0)
+  }
+
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 40)
     return () => clearTimeout(t)
@@ -107,19 +99,28 @@ export default function Socials() {
     const onKey = (e) => {
       const cur = stateRef.current
       if (cur.focus === 'left') {
-        if (e.key === 'ArrowUp') setActive((i) => Math.max(0, i - 1))
-        if (e.key === 'ArrowDown') setActive((i) => Math.min(ITEMS.length - 1, i + 1))
+        if (e.key === 'ArrowUp') {
+          setActive((i) => Math.max(0, i - 1))
+          setActiveInfoBar(0)
+        }
+        if (e.key === 'ArrowDown') {
+          setActive((i) => Math.min(ITEMS.length - 1, i + 1))
+          setActiveInfoBar(0)
+        }
         if (e.key === 'ArrowRight') {
           setFocus('right')
           setActiveInfoBar(0)
         }
-        if (e.key === 'Enter') window.open(ITEMS[cur.active].href, '_blank')
+        if (e.key === 'Enter') window.open(ITEMS[cur.active].href, '_blank', 'noopener,noreferrer')
       } else {
-        const barCount = ITEMS[cur.active].bars
+        const entries = ITEMS[cur.active].entries
         if (e.key === 'ArrowUp') setActiveInfoBar((i) => Math.max(0, i - 1))
-        if (e.key === 'ArrowDown') setActiveInfoBar((i) => Math.min(barCount - 1, i + 1))
+        if (e.key === 'ArrowDown') setActiveInfoBar((i) => Math.min(entries.length - 1, i + 1))
         if (e.key === 'ArrowLeft') setFocus('left')
-        if (e.key === 'Enter') window.open('https://' + ITEMS[cur.active].links[cur.activeInfoBar], '_blank')
+        if (e.key === 'Enter') {
+          const entry = entries[cur.activeInfoBar] || entries[0]
+          if (entry) window.open(entry.url, '_blank', 'noopener,noreferrer')
+        }
       }
       if ((e.key === 'ArrowLeft' && cur.focus === 'left') || e.key === 'Escape' || e.key === 'Backspace') {
         navigate(-1)
@@ -129,6 +130,8 @@ export default function Socials() {
     return () => window.removeEventListener('keydown', onKey)
   }, [navigate])
 
+  const currentEntries = ITEMS[active].entries
+
   return (
     <div id="menu-screen" className="socials-page">
       <div className="sc-root" role="navigation">
@@ -137,10 +140,10 @@ export default function Socials() {
             key={item.id}
             className={`sc-bar-outer${active === i ? ' active' : ''}${mounted ? ' mounted' : ''}`}
             onClick={() => {
-              if (active === i) window.open(item.href, '_blank')
-              else setActive(i)
+              if (active === i) window.open(item.href, '_blank', 'noopener,noreferrer')
+              else selectPlatform(i)
             }}
-            onMouseEnter={() => setActive(i)}
+            onMouseEnter={() => selectPlatform(i)}
           >
             <div className="sc-bar-red" />
             <div className="sc-bar">
@@ -191,37 +194,35 @@ export default function Socials() {
         <div className="sc-mobile-feed-header">
           <span className="sc-mobile-feed-title">▸ {ITEMS[active].label}</span>
           <span className="sc-mobile-feed-count">
-            {ITEMS[active].bars} {ITEMS[active].bars === 1 ? 'LINK' : 'LINKS'}
+            {currentEntries.length} {currentEntries.length === 1 ? 'LINK' : 'LINKS'}
           </span>
         </div>
       )}
 
       {mounted && (
         <div className="sc-info-panel" key={`panel-${active}`}>
-          {Array.from({ length: ITEMS[active].bars }).map((_, i) => (
+          {currentEntries.map((entry, i) => (
             <div
               className={`sc-info-bar-wrap${activeInfoBar === i ? ' selected' : ''}`}
-              key={`bar-${active}-${i}`}
+              key={`bar-${active}-${entry.label}`}
               style={{ animationDelay: `${i * 50}ms` }}
               onClick={() => {
                 if (isMobileViewport || activeInfoBar === i) {
-                  window.open('https://' + ITEMS[active].links[i], '_blank')
+                  window.open(entry.url, '_blank', 'noopener,noreferrer')
                   return
                 }
                 setActiveInfoBar(i)
               }}
               onMouseEnter={() => setActiveInfoBar(i)}
             >
-              {ITEMS[active].newBars.includes(i) && (
+              {entry.isNew && (
                 <img className="sc-info-bar-new" src={newsign} alt="" decoding="async" />
               )}
               <div className="sc-info-bar">
                 <img className="sc-info-bar-icon" src={ITEMS[active].barIcon} alt="" decoding="async" />
-                <span className="sc-info-bar-text">
-                  {isMobileViewport ? ITEMS[active].links[i] : `${ITEMS[active].links[i].slice(0, 10)}...`}
-                </span>
-                <span className="sc-info-bar-box">VIEWS</span>
-                <span className="sc-info-bar-count">{ITEMS[active].counts[i]}</span>
+                <span className="sc-info-bar-text">{entry.label}</span>
+                <span className="sc-info-bar-box">{entry.tag}</span>
+                <span className="sc-info-bar-count">{entry.value}</span>
               </div>
             </div>
           ))}
@@ -250,7 +251,7 @@ export default function Socials() {
         <button
           className="sc-mobile-btn primary"
           type="button"
-          onClick={() => window.open(ITEMS[active].href, '_blank')}
+          onClick={() => window.open(ITEMS[active].href, '_blank', 'noopener,noreferrer')}
         >
           OPEN {ITEMS[active].label} ↗
         </button>

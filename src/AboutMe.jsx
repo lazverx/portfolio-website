@@ -16,20 +16,18 @@ const MAIN_IMAGES = [mainm, mainm2, mainf]
 
 const REVEAL_CONTENT = [
   {
-    upper: ['name: Faiz/Laz/Rushi', 'age:17'],
-    lower: 'major: Software Engineering',
+    upper: ['name: Faiz / Laz / Rushi', 'age: 18', 'major: Software Engineering'],
+    lower: 'web, backend, security, automation',
+  },
+  {
+    upper: ['huge rhythm gamer, mostly osu!, arcaea, and pjsk.'],
+    lower: 'fun fact',
   },
   {
     upper: [
-      'I’m weirdly good at multiple rhythm games,and currently i really fw lucy bedroque',
+      'studying german for ausbildung, learning cyber security and ctf, building ai agents and automation stuff, and messing around in fl studio.',
     ],
-    lower: 'Fun facts about me',
-  },
-  {
-    upper: [
-      'I’m constantly wiring together completely different skill trees at the same time,studying German for my Ausbildung goal, learning Cyber Security, and experimenting with music production in FL Studio. My brain gets addicted to progression systems, whether it’s language levels, cleaner code, or better sound design..',
-    ],
-    lower: 'Wired facts about me',
+    lower: "what i'm up to",
   },
 ]
 
@@ -40,9 +38,9 @@ const ROLES = [
 ]
 
 const ITEMS = [
-  { id: 'twitch', label: 'ABOUT ME' },
-  { id: 'instagram', label: 'FUN FACT ABOUT ME' },
-  { id: 'tiktok', label: 'WIRED FACT ABOUT ME' },
+  { id: 'about', label: 'ABOUT ME', tabLabel: '01 ABOUT' },
+  { id: 'funfact', label: 'FUN FACT', tabLabel: '02 FUN FACT' },
+  { id: 'currently', label: 'CURRENTLY', tabLabel: '03 NOW' },
 ]
 
 export default function AboutMe() {
@@ -111,7 +109,7 @@ export default function AboutMe() {
                 setActive(idx)
               }}
             >
-              {idx === 0 ? '01 ABOUT' : idx === 1 ? '02 FUN FACT' : '03 WIRED'}
+              {item.tabLabel}
             </button>
           ))}
         </div>

@@ -19,23 +19,63 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
     const sceneEl = sceneRef.current
     if (!videoEl) return
 
-    if (active) {
-      if (entryReveal && sceneEl) {
-        sceneEl.classList.remove('is-circle-reveal')
-        void sceneEl.offsetWidth
-        sceneEl.classList.add('is-circle-reveal')
-      }
-      const playPromise = videoEl.play()
-      if (playPromise && typeof playPromise.catch === 'function') {
-        playPromise.catch(() => {})
-      }
-    } else {
+    videoEl.defaultMuted = true
+    videoEl.muted = true
+    videoEl.playsInline = true
+
+    if (!active) {
       videoEl.pause()
       if (sceneEl) {
         sceneEl.classList.remove('is-circle-reveal')
       }
+      return
+    }
+
+    if (entryReveal && sceneEl) {
+      sceneEl.classList.remove('is-circle-reveal')
+      void sceneEl.offsetWidth
+      sceneEl.classList.add('is-circle-reveal')
+    }
+
+    let unlockCleanup = null
+
+    const tryPlay = () => {
+      videoEl.muted = true
+      const playPromise = videoEl.play()
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {
+          if (unlockCleanup) return
+          const onGesture = () => {
+            videoEl.muted = true
+            videoEl.play().catch(() => {})
+            cleanupGesture()
+          }
+          const cleanupGesture = () => {
+            window.removeEventListener('pointerdown', onGesture)
+            window.removeEventListener('keydown', onGesture)
+            unlockCleanup = null
+          }
+          window.addEventListener('pointerdown', onGesture, { once: true, passive: true })
+          window.addEventListener('keydown', onGesture, { once: true, passive: true })
+          unlockCleanup = cleanupGesture
+        })
+      }
+    }
+
+    if (videoEl.readyState >= 2) {
+      queueMicrotask(() => setReady(true))
+    }
+
+    tryPlay()
+
+    return () => {
+      if (unlockCleanup) unlockCleanup()
     }
   }, [active, entryReveal])
+
+  const markReady = () => {
+    setReady((prev) => (prev ? prev : true))
+  }
 
   return (
     <div
@@ -60,8 +100,10 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
         muted
         playsInline
         preload="auto"
-        onPlaying={() => setReady(true)}
-        onLoadedData={() => setReady(true)}
+        onLoadedData={markReady}
+        onCanPlay={markReady}
+        onPlaying={markReady}
+        onTimeUpdate={markReady}
       />
     </div>
   )

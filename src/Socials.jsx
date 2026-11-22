@@ -188,6 +188,15 @@ export default function Socials() {
       )}
 
       {mounted && (
+        <div className="sc-mobile-feed-header">
+          <span className="sc-mobile-feed-title">▸ {ITEMS[active].label}</span>
+          <span className="sc-mobile-feed-count">
+            {ITEMS[active].bars} {ITEMS[active].bars === 1 ? 'LINK' : 'LINKS'}
+          </span>
+        </div>
+      )}
+
+      {mounted && (
         <div className="sc-info-panel" key={`panel-${active}`}>
           {Array.from({ length: ITEMS[active].bars }).map((_, i) => (
             <div
@@ -208,7 +217,9 @@ export default function Socials() {
               )}
               <div className="sc-info-bar">
                 <img className="sc-info-bar-icon" src={ITEMS[active].barIcon} alt="" decoding="async" />
-                <span className="sc-info-bar-text">{ITEMS[active].links[i].slice(0, 10)}...</span>
+                <span className="sc-info-bar-text">
+                  {isMobileViewport ? ITEMS[active].links[i] : `${ITEMS[active].links[i].slice(0, 10)}...`}
+                </span>
                 <span className="sc-info-bar-box">VIEWS</span>
                 <span className="sc-info-bar-count">{ITEMS[active].counts[i]}</span>
               </div>
@@ -234,14 +245,14 @@ export default function Socials() {
 
       <div className="sc-mobile-controls" aria-label="Socials mobile controls">
         <button className="sc-mobile-btn" type="button" onClick={() => navigate(-1)}>
-          BACK
+          ◄ BACK
         </button>
         <button
-          className="sc-mobile-btn"
+          className="sc-mobile-btn primary"
           type="button"
           onClick={() => window.open(ITEMS[active].href, '_blank')}
         >
-          OPEN
+          OPEN {ITEMS[active].label} ↗
         </button>
       </div>
     </div>

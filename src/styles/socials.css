@@ -201,50 +201,6 @@
   user-select: none;
 }
 
-@media (max-width: 768px) {
-  .socials-page .sc-root {
-    justify-content: flex-start;
-    padding-top: 12px;
-    gap: 3px;
-  }
-
-  .socials-page .sc-info-panel {
-    top: min(47vh, 320px);
-    left: 8px;
-    right: 8px;
-    bottom: 58px;
-    gap: 4px;
-    padding: 4px 0;
-  }
-
-  .socials-page .sc-info-bar-wrap {
-    height: 38px !important;
-  }
-
-  .socials-page .sc-info-bar-text {
-    font-size: 15px;
-    letter-spacing: 1px;
-  }
-
-  .socials-page .sc-info-bar-count {
-    margin-right: 10px;
-    font-size: 14px;
-  }
-
-  .socials-page .sc-footer {
-    display: none;
-  }
-
-  .socials-page .sc-mobile-controls {
-    position: fixed;
-    left: 8px;
-    right: 8px;
-    bottom: max(8px, env(safe-area-inset-bottom));
-    z-index: 60;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    pointer-events: all;
-  }
+.socials-page .sc-mobile-feed-header {
+  display: none;
 }

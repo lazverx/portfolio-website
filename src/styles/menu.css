@@ -216,3 +216,7 @@
 .p3-name-tag span:first-child {
   color: rgba(0, 0, 0, 0.86);
 }
+
+.p3-mobile-hint {
+  display: none;
+}

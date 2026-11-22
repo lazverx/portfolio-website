@@ -4,6 +4,7 @@ import BackgroundVideoStage from './components/BackgroundVideoStage'
 import P3Menu from './P3Menu'
 import PageTransition from './PageTransition'
 import './App.css'
+import './styles/mobile.css'
 
 const AboutMe = lazy(() => import('./AboutMe'))
 const ResumePage = lazy(() => import('./ResumePage'))

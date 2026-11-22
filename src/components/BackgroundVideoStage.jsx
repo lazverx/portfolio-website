@@ -76,6 +76,7 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
   return (
     <div
       ref={sceneRef}
+      data-scene={sceneKey}
       className={`bg-scene${active ? ' is-active' : ''}`}
       onAnimationEnd={(e) => e.currentTarget.classList.remove('is-circle-reveal')}
     >

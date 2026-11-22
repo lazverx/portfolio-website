@@ -107,7 +107,7 @@ export default function ResumePage() {
 
       <div className="resume-mobile-controls" aria-label="Resume mobile controls">
         <button className="resume-mobile-btn" type="button" onClick={() => navigate(-1)}>
-          BACK
+          ◄ BACK
         </button>
       </div>
     </div>

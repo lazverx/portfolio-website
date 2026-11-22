@@ -339,18 +339,3 @@
   border-radius: 8px;
   min-width: 84px;
 }
-
-@media (max-width: 768px) {
-  .resume-mobile-controls {
-    position: fixed;
-    left: 8px;
-    right: 8px;
-    bottom: max(8px, env(safe-area-inset-bottom));
-    z-index: 20;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    pointer-events: all;
-  }
-}

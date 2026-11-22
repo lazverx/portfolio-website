@@ -146,6 +146,8 @@ export default function P3Menu({ onNavigate }) {
           <span>CONFIRM</span>
         </div>
       </div>
+
+      <div className="p3-mobile-hint">TAP AN ITEM TO EXPLORE</div>
     </div>
   )
 }

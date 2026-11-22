@@ -1,0 +1,778 @@
+/* ==========================================================================
+   Persona 3 Reload — Dedicated Mobile UI (<= 768px ONLY)
+   Zero impact on desktop (> 768px) or tablet (769px - 1024px)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #menu-screen,
+  #main {
+    height: 100dvh;
+    min-height: 100dvh;
+  }
+
+  /* Portrait framing for background videos & posters */
+  .bg-scene[data-scene='home'] .bg-scene-video,
+  .bg-scene[data-scene='home'] .bg-scene-poster {
+    object-position: 44% center;
+  }
+
+  .bg-scene[data-scene='about'] .bg-scene-video,
+  .bg-scene[data-scene='about'] .bg-scene-poster {
+    object-position: 64% center;
+  }
+
+  .bg-scene[data-scene='resume'] .bg-scene-video,
+  .bg-scene[data-scene='resume'] .bg-scene-poster {
+    object-position: 68% center;
+  }
+
+  .bg-scene[data-scene='socials'] .bg-scene-video,
+  .bg-scene[data-scene='socials'] .bg-scene-poster {
+    object-position: 64% center;
+  }
+
+  /* ========================================================================
+     SHARED PERSONA 3 MOBILE ACTION DOCK
+     ======================================================================== */
+  #menu-screen .sc-mobile-controls,
+  #menu-screen .resume-mobile-controls {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 18px 14px max(12px, env(safe-area-inset-bottom)) 14px;
+    background: linear-gradient(180deg, rgba(4, 12, 34, 0) 0%, rgba(4, 12, 34, 0.88) 48%, rgba(4, 12, 34, 0.96) 100%);
+    pointer-events: none;
+  }
+
+  #menu-screen .sc-mobile-btn,
+  #menu-screen .resume-mobile-btn {
+    pointer-events: auto;
+    min-height: 44px;
+    min-width: 108px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 0;
+    background: #0b1648;
+    color: #eaf9ff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    box-shadow: inset 0 0 0 1.5px rgba(83, 237, 255, 0.65);
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  #menu-screen .sc-mobile-btn:active,
+  #menu-screen .resume-mobile-btn:active {
+    transform: scale(0.96);
+  }
+
+  #menu-screen .sc-mobile-btn.primary {
+    background: #ffffff;
+    color: #091345;
+    box-shadow: inset 0 3px 0 #c4001a;
+  }
+
+  #menu-screen .sc-footer {
+    display: none;
+  }
+
+  /* ========================================================================
+     HOME MENU (/)
+     ======================================================================== */
+  #menu-screen .p3-name-tag {
+    top: max(16px, env(safe-area-inset-top));
+    left: 18px;
+    font-size: clamp(44px, 12.5vw, 58px);
+    line-height: 0.88;
+    letter-spacing: 1px;
+    transform: rotate(8deg);
+  }
+
+  #menu-screen .p3-menu {
+    padding: 16px;
+    margin-top: 44px;
+    gap: 10px;
+    transform: scale(0.68);
+    transform-origin: center;
+  }
+
+  #menu-screen .p3-row {
+    transform-origin: center;
+    margin-right: 0 !important;
+  }
+
+  #menu-screen .p3-label-dark {
+    text-shadow: 0 3px 14px rgba(4, 16, 43, 0.7);
+  }
+
+  #menu-screen .p3-row.active .p3-label-dark {
+    text-shadow: none;
+  }
+
+  #menu-screen .p3-hint {
+    display: none;
+  }
+
+  #menu-screen .p3-mobile-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    bottom: max(20px, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    padding: 7px 18px;
+    background: rgba(4, 16, 43, 0.72);
+    border-left: 3px solid #53edff;
+    border-right: 3px solid #c4001a;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2.5px;
+    color: rgba(235, 250, 255, 0.88);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ========================================================================
+     SHARED PARTY BARS (AboutMe & Socials)
+     ======================================================================== */
+  #menu-screen .sc-bar-outer {
+    width: 94vw;
+    max-width: 520px;
+  }
+
+  #menu-screen .sc-bar,
+  #menu-screen .sc-bar-red {
+    width: 100%;
+    height: 62px;
+  }
+
+  #menu-screen .sc-bar-outer.active .sc-bar,
+  #menu-screen .sc-bar-outer.active .sc-bar-red {
+    height: 76px;
+  }
+
+  #menu-screen .sc-bar-red {
+    transform: translateY(-5px);
+    clip-path: polygon(36% 0, 100% 0, 100% 100%, 30% 100%);
+  }
+
+  #menu-screen .sc-bar-fill {
+    clip-path: polygon(100% 0, 100% 0, calc(100% - 16px) 100%, calc(100% - 16px) 100%);
+  }
+
+  #menu-screen .sc-bar-outer.active .sc-bar-fill {
+    clip-path: polygon(33% 0, 100% 0, calc(100% - 14px) 100%, 40% 100%);
+  }
+
+  #menu-screen .sc-bar-shade {
+    display: none;
+  }
+
+  #menu-screen .sc-bar-content {
+    padding: 0 16px 0 8px;
+    gap: 8px;
+  }
+
+  #menu-screen .sc-role {
+    font-size: 23px;
+    letter-spacing: -0.5px;
+    padding: 0;
+    width: 62px;
+    justify-content: center;
+    transform: rotate(-16deg);
+    position: relative;
+    z-index: 4;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  }
+
+  #menu-screen .sc-char {
+    left: 62px;
+    width: auto;
+    max-width: 78px;
+    height: 100%;
+    object-fit: cover;
+    object-position: 28% top;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    z-index: 3;
+  }
+
+  #menu-screen .sc-main {
+    padding-left: 68px;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  #menu-screen .sc-main-top {
+    gap: 6px;
+  }
+
+  #menu-screen .sc-icon {
+    font-size: 16px;
+    width: 20px;
+  }
+
+  #menu-screen .sc-label {
+    font-size: clamp(17px, 4.5vw, 22px);
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+  }
+
+  /* Hide desktop Xbox LB/RB prompt on mobile */
+  #menu-screen .sc-right-nav {
+    display: none;
+  }
+
+  /* ========================================================================
+     ABOUT ME (/about) — List + Full Hero Portrait Dossier Reveal
+     ======================================================================== */
+  #menu-screen.about-page .sc-root {
+    justify-content: center;
+    gap: 10px;
+    padding: max(18px, env(safe-area-inset-top)) 0 calc(84px + env(safe-area-inset-bottom)) 0;
+  }
+
+  #menu-screen.about-page .sc-main {
+    align-items: flex-end;
+    padding-right: 4px;
+  }
+
+  #menu-screen.about-page.is-revealed .sc-root {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #menu-screen.about-page .sc-dim {
+    background: rgba(4, 12, 34, 0.8);
+    backdrop-filter: blur(5px);
+  }
+
+  #menu-screen.about-page .sc-mobile-tabs {
+    display: flex;
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    left: 12px;
+    right: 12px;
+    z-index: 20;
+    gap: 6px;
+    pointer-events: auto;
+  }
+
+  #menu-screen.about-page .sc-mobile-tab {
+    flex: 1;
+    min-height: 38px;
+    border: none;
+    background: rgba(11, 22, 72, 0.9);
+    color: #9ffbff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1.2px;
+    clip-path: polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
+    box-shadow: inset 0 0 0 1px rgba(133, 244, 255, 0.35);
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+
+  #menu-screen.about-page .sc-mobile-tab.active {
+    background: #ffffff;
+    color: #091345;
+    box-shadow: inset 0 3px 0 #c4001a;
+  }
+
+  #menu-screen.about-page .sc-main-portrait-shell {
+    position: fixed;
+    top: calc(max(14px, env(safe-area-inset-top)) + 48px);
+    left: 14px;
+    right: 14px;
+    width: auto;
+    height: 36dvh;
+    z-index: 16;
+    opacity: 1;
+    transform: none;
+    animation: sc-dim-in 0.28s ease-out;
+    background: #071333;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.55),
+      inset 0 3px 0 #53edff;
+  }
+
+  #menu-screen.about-page .sc-main-portrait-shell.mounted {
+    opacity: 1;
+    transform: none;
+    animation: sc-dim-in 0.28s ease-out;
+  }
+
+  #menu-screen.about-page .sc-main-portrait {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+    transform: none;
+  }
+
+  #menu-screen.about-page .sc-reveal-panel {
+    position: fixed;
+    top: calc(max(14px, env(safe-area-inset-top)) + 48px + 36dvh + 10px);
+    left: 14px;
+    right: 14px;
+    bottom: calc(74px + env(safe-area-inset-bottom));
+    width: auto;
+    height: auto;
+    z-index: 16;
+    opacity: 1;
+    transform: none;
+    animation: sc-dim-in 0.3s ease-out;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 14px 12px 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #eef4fc 100%);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+    box-shadow:
+      0 12px 32px rgba(0, 0, 0, 0.55),
+      8px 0 0 #c4001a;
+  }
+
+  #menu-screen.about-page .sc-reveal-panel.mounted {
+    opacity: 1;
+    transform: none;
+    animation: sc-dim-in 0.3s ease-out;
+  }
+
+  #menu-screen.about-page .sc-reveal-upper-bar {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 14px 16px;
+    background: #0b101d;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    gap: 8px;
+  }
+
+  #menu-screen.about-page .sc-reveal-upper-line {
+    font-size: 15px;
+    line-height: 1.48;
+    letter-spacing: 0.2px;
+    color: #f4f8ff;
+    padding: 0;
+  }
+
+  #menu-screen.about-page .sc-reveal-lower-bar {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    align-self: flex-end;
+    width: auto;
+    min-width: 54%;
+    min-height: 0;
+    max-height: none;
+    padding: 7px 18px 7px 14px;
+    background: #c4001a;
+    color: #ffffff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    overflow: visible;
+    clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+
+  /* ========================================================================
+     RESUME (/resume) — Full Unclipped Badges + Overlap-Free Scroll
+     ======================================================================== */
+  #menu-screen.resume-page .resume-overlay {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: auto;
+    padding: max(12px, env(safe-area-inset-top)) 14px calc(92px + env(safe-area-inset-bottom)) 14px;
+  }
+
+  #menu-screen.resume-page .resume-stack {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    transform: none;
+    gap: 8px;
+  }
+
+  #menu-screen.resume-page .resume-list-tag {
+    font-size: 48px;
+    margin: 0 0 2px 6px;
+  }
+
+  #menu-screen.resume-page .resume-card {
+    height: 78px;
+  }
+
+  #menu-screen.resume-page .resume-card-wrap.active .resume-card {
+    box-shadow: 7px 6px 0 #d63232;
+    transform: translateX(3px);
+  }
+
+  #menu-screen.resume-page .resume-badge {
+    width: 38px;
+    height: 48px;
+    top: 12px;
+    left: 10px;
+    border-width: 2px;
+  }
+
+  #menu-screen.resume-page .resume-badge-text {
+    font-size: 24px;
+  }
+
+  #menu-screen.resume-page .resume-card-inner {
+    padding: 8px 14px 8px 56px;
+  }
+
+  #menu-screen.resume-page .resume-title {
+    font-size: clamp(23px, 6.5vw, 31px);
+  }
+
+  #menu-screen.resume-page .resume-rank {
+    gap: 6px;
+    margin-top: 0;
+  }
+
+  #menu-screen.resume-page .resume-rank-label {
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+
+  #menu-screen.resume-page .resume-rank-number {
+    font-size: 35px;
+  }
+
+  #menu-screen.resume-page .resume-subtitle-bar {
+    left: 56px;
+    right: 10px;
+    bottom: 7px;
+    height: 23px;
+    padding: 0 10px;
+  }
+
+  #menu-screen.resume-page .resume-subtitle {
+    font-size: clamp(13px, 3.4vw, 15px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #menu-screen.resume-page .resume-detail-panel {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    min-height: 0;
+    margin: 14px 0 0 0;
+    padding: 14px 12px;
+    box-shadow:
+      inset 0 0 0 1px rgba(133, 244, 255, 0.2),
+      10px 10px 0 rgba(0, 6, 30, 0.55);
+  }
+
+  #menu-screen.resume-page .resume-detail-top {
+    grid-template-columns: 38px 1fr auto;
+    min-height: 58px;
+    gap: 8px;
+    padding: 0 12px;
+  }
+
+  #menu-screen.resume-page .resume-detail-top-index {
+    font-size: 28px;
+  }
+
+  #menu-screen.resume-page .resume-detail-top-title {
+    font-size: 24px;
+  }
+
+  #menu-screen.resume-page .resume-detail-top-progress {
+    font-size: 26px;
+  }
+
+  #menu-screen.resume-page .resume-detail-list {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  #menu-screen.resume-page .resume-detail-row {
+    grid-template-columns: 30px 1fr auto;
+    min-height: 44px;
+    gap: 8px;
+    padding: 0 10px;
+  }
+
+  #menu-screen.resume-page .resume-detail-row-index {
+    font-size: 18px;
+  }
+
+  #menu-screen.resume-page .resume-detail-row-title {
+    font-size: 17px;
+  }
+
+  #menu-screen.resume-page .resume-detail-status {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  #menu-screen.resume-page .resume-detail-bottom {
+    margin-top: 14px;
+    padding: 14px 12px;
+  }
+
+  #menu-screen.resume-page .resume-detail-bottom-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  #menu-screen.resume-page .resume-detail-bullet {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  /* ========================================================================
+     SOCIALS (/socials) — Stats Restored + High-Contrast Feed + Zero Gap
+     ======================================================================== */
+  #menu-screen.socials-page {
+    display: flex;
+    flex-direction: column;
+    padding: max(12px, env(safe-area-inset-top)) 0 calc(72px + env(safe-area-inset-bottom)) 0;
+  }
+
+  #menu-screen.socials-page .sc-root {
+    position: relative;
+    inset: auto;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  #menu-screen.socials-page .sc-bar,
+  #menu-screen.socials-page .sc-bar-red {
+    height: 58px;
+  }
+
+  #menu-screen.socials-page .sc-bar-outer.active .sc-bar,
+  #menu-screen.socials-page .sc-bar-outer.active .sc-bar-red {
+    height: 70px;
+  }
+
+  #menu-screen.socials-page .sc-icon {
+    display: none;
+  }
+
+  #menu-screen.socials-page .sc-main {
+    padding-left: 62px;
+  }
+
+  #menu-screen.socials-page .sc-label {
+    font-size: clamp(16px, 4.2vw, 20px);
+    letter-spacing: 1px;
+  }
+
+  #menu-screen.socials-page .sc-stats {
+    display: flex;
+    gap: 6px;
+    padding-right: 4px;
+  }
+
+  #menu-screen.socials-page .sc-stat-tag {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+    padding: 0 3px;
+  }
+
+  #menu-screen.socials-page .sc-stat-num {
+    font-size: 17px;
+  }
+
+  #menu-screen.socials-page .sc-mobile-feed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px 12px 6px 12px;
+    padding: 7px 14px;
+    background: rgba(9, 19, 69, 0.92);
+    border-left: 4px solid #53edff;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 20;
+  }
+
+  #menu-screen.socials-page .sc-mobile-feed-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #ffffff;
+  }
+
+  #menu-screen.socials-page .sc-mobile-feed-count {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    color: #091345;
+    background: #53edff;
+    padding: 2px 10px;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  }
+
+  #menu-screen.socials-page .sc-info-panel {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    flex: 1;
+    min-height: 0;
+    z-index: 20;
+    padding: 4px 12px 12px 12px;
+    gap: 7px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: auto;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-wrap {
+    width: 100%;
+    height: 46px;
+    flex-shrink: 0;
+    padding: 0;
+    border-radius: 0;
+    background: rgba(8, 17, 52, 0.84);
+    backdrop-filter: blur(8px);
+    box-shadow: inset 0 0 0 1px rgba(133, 244, 255, 0.24);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+
+  #menu-screen.socials-page .sc-info-bar-wrap.selected {
+    background: #111111;
+    padding: 1.5px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  }
+
+  #menu-screen.socials-page .sc-info-bar {
+    background: transparent;
+    border-radius: 0;
+    padding-right: 12px;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-wrap.selected .sc-info-bar {
+    background: #ffffff;
+    border-radius: 0;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-new {
+    position: absolute;
+    right: 96px;
+    left: auto;
+    top: 3px;
+    bottom: auto;
+    height: 14px;
+    width: auto;
+    z-index: 4;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-icon {
+    height: 22px;
+    margin-left: 10px;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-text {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    letter-spacing: 0.8px;
+    color: #eef7ff;
+    padding: 0 10px;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-wrap.selected .sc-info-bar-text {
+    color: #111111;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-box {
+    height: 24px;
+    font-size: 13px;
+    padding: 0 8px;
+    border-radius: 3px;
+    background: #53edff;
+    color: #06133b;
+    margin-right: 8px;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-wrap.selected .sc-info-bar-box {
+    background: #111111;
+    color: #ffffff;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-count {
+    font-size: 16px;
+    color: #ffffff;
+    margin-right: 4px;
+    min-width: 38px;
+    text-align: right;
+  }
+
+  #menu-screen.socials-page .sc-info-bar-wrap.selected .sc-info-bar-count {
+    color: #111111;
+  }
+}
+
+/* Extra fine-tuning for compact phones (360px wide) */
+@media (max-width: 380px) {
+  #menu-screen .p3-menu {
+    transform: scale(0.58);
+  }
+
+  #menu-screen .sc-role {
+    font-size: 20px;
+    width: 54px;
+  }
+
+  #menu-screen .sc-char {
+    left: 58px;
+    width: 56px;
+    max-width: 56px;
+  }
+
+  #menu-screen .sc-main {
+    padding-left: 62px;
+  }
+
+  #menu-screen .sc-label {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+}

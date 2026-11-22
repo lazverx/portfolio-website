@@ -60,15 +60,13 @@ export default function AboutMe() {
 
   const handleBarClick = (index) => {
     preloadImage(MAIN_IMAGES[index])
-    if (isMobileViewport && active === index) {
-      setRevealed((prev) => !prev)
+    if (isMobileViewport) {
+      setActive(index)
+      setRevealed(true)
       return
     }
 
     setActive(index)
-    if (isMobileViewport) {
-      setRevealed(false)
-    }
   }
 
   useEffect(() => {
@@ -97,8 +95,27 @@ export default function AboutMe() {
   }, [navigate])
 
   return (
-    <div id="menu-screen" className="about-page">
+    <div id="menu-screen" className={`about-page${revealed ? ' is-revealed' : ''}`}>
       {revealed && <div key={`dim-${active}`} className="sc-dim" />}
+      {revealed && (
+        <div className="sc-mobile-tabs" role="tablist" aria-label="About sections">
+          {ITEMS.map((item, idx) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={active === idx}
+              className={`sc-mobile-tab${active === idx ? ' active' : ''}`}
+              onClick={() => {
+                preloadImage(MAIN_IMAGES[idx])
+                setActive(idx)
+              }}
+            >
+              {idx === 0 ? '01 ABOUT' : idx === 1 ? '02 FUN FACT' : '03 WIRED'}
+            </button>
+          ))}
+        </div>
+      )}
       {revealed && (
         <div key={`panel-${active}`} className={`sc-reveal-panel${mounted ? ' mounted' : ''}`}>
           <div className="sc-reveal-upper-bar">
@@ -176,10 +193,10 @@ export default function AboutMe() {
       </div>
 
       <div className="sc-mobile-controls" aria-label="About mobile controls">
-        <button className="sc-mobile-btn" type="button" onClick={() => navigate(-1)}>
-          BACK
+        <button className="sc-mobile-btn" type="button" onClick={() => (revealed ? setRevealed(false) : navigate(-1))}>
+          ◄ BACK
         </button>
-        <button className="sc-mobile-btn" type="button" onClick={() => setRevealed((prev) => !prev)}>
+        <button className="sc-mobile-btn primary" type="button" onClick={() => setRevealed((prev) => !prev)}>
           {revealed ? 'HIDE' : 'REVEAL'}
         </button>
       </div>

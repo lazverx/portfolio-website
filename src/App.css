@@ -5,12 +5,78 @@
 }
 
 body {
-  background: #000;
+  background: #04102b;
   overflow: hidden;
+}
+
+/* Persistent background video & instant first-frame poster stage */
+.bg-stage {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100dvh;
+  z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 60% 35%, #0a2a6e 0%, #04102b 75%);
+  pointer-events: none;
+}
+
+.bg-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 0;
+  background: #04102b;
+}
+
+.bg-scene.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+.bg-scene.is-circle-reveal {
+  background: #0047ff;
+  clip-path: circle(0 at 50% 50%);
+  animation: bg-circle-reveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes bg-circle-reveal {
+  from { clip-path: circle(0 at 50% 50%); }
+  to { clip-path: circle(150vmax at 50% 50%); }
+}
+
+.bg-scene-poster,
+.bg-scene-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bg-scene-poster {
+  z-index: 0;
+}
+
+.bg-scene-video {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+  will-change: opacity;
+}
+
+.bg-scene-video.is-ready {
+  opacity: 1;
 }
 
 #menu-screen {
   position: relative;
+  z-index: 1;
   width: 100vw;
   height: 100vh;
   min-height: 100dvh;

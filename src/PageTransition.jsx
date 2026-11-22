@@ -1,156 +1,121 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+import './styles/transitions.css'
 
-const defaultBlocks = ["#0d1a3a", "#1a6aff", "#7dd4fc"];
+const DEFAULT_BLOCKS = ['#0d1a3a', '#1a6aff', '#7dd4fc']
 
-function DefaultTransition() {
-  return defaultBlocks.map((color, i) => (
-    <motion.div
-      key={i}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: color,
-        zIndex: 999 - i,
-        originX: 0,
-      }}
-      initial={{ scaleX: 0 }}
-      animate={{ scaleX: [0, 1, 1, 0] }}
-      transition={{
-        duration: 0.45,
-        delay: i * 0.05,
-        times: [0, 0.4, 0.6, 1],
-        ease: [0.76, 0, 0.24, 1],
-      }}
-    />
-  ));
-}
+const ABOUT_PANELS = [
+  { color: '#00184c', top: '-12vh', left: '-18vw', width: '86vw', delay: 0 },
+  { color: '#53edff', top: '24vh', left: '-10vw', width: '72vw', delay: 0.05 },
+  { color: '#ffffff', top: '58vh', left: '-14vw', width: '82vw', delay: 0.1 },
+]
 
-function AboutTransition() {
-  const panels = [
-    { color: "#00184c", top: "-12vh", left: "-18vw", width: "86vw", delay: 0 },
-    { color: "#53edff", top: "24vh", left: "-10vw", width: "72vw", delay: 0.05 },
-    { color: "#ffffff", top: "58vh", left: "-14vw", width: "82vw", delay: 0.1 },
-  ];
+const RESUME_CARDS = [
+  { top: '14vh', color: '#0f1760', delay: 0 },
+  { top: '31vh', color: '#7ff6ff', delay: 0.05 },
+  { top: '48vh', color: '#ffffff', delay: 0.1 },
+  { top: '65vh', color: '#0f1760', delay: 0.15 },
+]
 
-  return panels.map((panel, i) => (
-    <motion.div
-      key={i}
-      style={{
-        position: "fixed",
-        top: panel.top,
-        left: panel.left,
-        width: panel.width,
-        height: "26vh",
-        background: panel.color,
-        zIndex: 999 - i,
-        clipPath: "polygon(0 0, 100% 0, calc(100% - 120px) 100%, 0 100%)",
-        transform: "rotate(-18deg)",
-        transformOrigin: "left center",
-      }}
-      initial={{ x: -500, opacity: 0 }}
-      animate={{ x: [-500, 20, 0], opacity: [1, 1, 0] }}
-      transition={{
-        duration: 0.52,
-        delay: panel.delay,
-        times: [0, 0.68, 1],
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    />
-  ));
-}
+const SOCIALS_STRIPES = [
+  { color: '#00184c', left: '72vw', width: '24vw', delay: 0 },
+  { color: '#00dff7', left: '80vw', width: '14vw', delay: 0.06 },
+  { color: '#ffffff', left: '88vw', width: '8vw', delay: 0.12 },
+]
 
-
-function SocialsTransition() {
-  const stripes = [
-    { color: "#00184c", left: "72vw", width: "24vw", delay: 0 },
-    { color: "#00dff7", left: "80vw", width: "14vw", delay: 0.06 },
-    { color: "#ffffff", left: "88vw", width: "8vw", delay: 0.12 },
-  ];
-
-  return stripes.map((stripe, i) => (
-    <motion.div
-      key={i}
-      style={{
-        position: "fixed",
-        top: "-6vh",
-        left: stripe.left,
-        width: stripe.width,
-        height: "112vh",
-        background: stripe.color,
-        zIndex: 999 - i,
-        transform: "skewX(-16deg)",
-        transformOrigin: "top",
-      }}
-      initial={{ y: -1200, opacity: 1 }}
-      animate={{ y: [-1200, 0, 0, 1200] }}
-      transition={{
-        duration: 0.56,
-        delay: stripe.delay,
-        times: [0, 0.42, 0.58, 1],
-        ease: [0.76, 0, 0.24, 1],
-      }}
-    />
-  ));
+const OVERLAY_DURATION_MS = {
+  default: 600,
+  about: 660,
+  resume: 780,
+  socials: 720,
 }
 
 function TransitionOverlay({ variant }) {
-  if (variant === "about") return <AboutTransition />;
-  if (variant === "resume") return <ResumeTransition />;
-  if (variant === "socials") return <SocialsTransition />;
-  return <DefaultTransition />;
-}
+  if (variant === 'about') {
+    return ABOUT_PANELS.map((panel, i) => (
+      <div
+        key={i}
+        className="pt-layer pt-about-panel"
+        style={{
+          top: panel.top,
+          left: panel.left,
+          width: panel.width,
+          background: panel.color,
+          zIndex: 999 - i,
+          animationDelay: `${panel.delay}s`,
+        }}
+      />
+    ))
+  }
 
-function ResumeTransition() {
-  const cards = [
-    { top: "14vh", color: "#0f1760", delay: 0 },
-    { top: "31vh", color: "#7ff6ff", delay: 0.05 },
-    { top: "48vh", color: "#ffffff", delay: 0.1 },
-    { top: "65vh", color: "#0f1760", delay: 0.15 },
-  ];
+  if (variant === 'resume') {
+    return RESUME_CARDS.map((card, i) => (
+      <div
+        key={i}
+        className="pt-layer pt-resume-card"
+        style={{
+          top: card.top,
+          background: card.color,
+          zIndex: 999 - i,
+          boxShadow: card.color === '#ffffff' ? '10px 0 0 #d63232' : 'none',
+          animationDelay: `${card.delay}s`,
+        }}
+      />
+    ))
+  }
 
-  return cards.map((card, i) => (
-    <motion.div
+  if (variant === 'socials') {
+    return SOCIALS_STRIPES.map((stripe, i) => (
+      <div
+        key={i}
+        className="pt-layer pt-socials-stripe"
+        style={{
+          left: stripe.left,
+          width: stripe.width,
+          background: stripe.color,
+          zIndex: 999 - i,
+          animationDelay: `${stripe.delay}s`,
+        }}
+      />
+    ))
+  }
+
+  return DEFAULT_BLOCKS.map((color, i) => (
+    <div
       key={i}
+      className="pt-layer pt-default-block"
       style={{
-        position: "fixed",
-        left: "-6vw",
-        top: card.top,
-        width: "78vw",
-        height: "14vh",
-        background: card.color,
+        background: color,
         zIndex: 999 - i,
-        clipPath: "polygon(0 0, 97% 0, 100% 100%, 3% 100%)",
-        boxShadow: card.color === "#ffffff" ? "10px 0 0 #d63232" : "none",
-      }}
-      initial={{ x: -900, opacity: 1 }}
-      animate={{ x: [-900, 30, 0, 900] }}
-      transition={{
-        duration: 0.6,
-        delay: card.delay,
-        times: [0, 0.48, 0.7, 1],
-        ease: [0.76, 0, 0.24, 1],
+        animationDelay: `${i * 0.05}s`,
       }}
     />
-  ));
+  ))
 }
 
-export default function PageTransition({ children, variant = "default" }) {
-  const location = useLocation();
+function TransitionStage({ children, variant }) {
+  const [showOverlay, setShowOverlay] = useState(true)
+
+  useEffect(() => {
+    const ms = OVERLAY_DURATION_MS[variant] ?? OVERLAY_DURATION_MS.default
+    const timer = setTimeout(() => setShowOverlay(false), ms)
+    return () => clearTimeout(timer)
+  }, [variant])
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div key={location.pathname} style={{ position: "relative" }}>
-        <TransitionOverlay variant={variant} />
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, delay: 0.18 }}
-        >
-          {children}
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
+    <div className="pt-root">
+      {showOverlay && <TransitionOverlay variant={variant} />}
+      <div className="pt-content">{children}</div>
+    </div>
+  )
+}
+
+export default function PageTransition({ children, variant = 'default' }) {
+  const location = useLocation()
+
+  return (
+    <TransitionStage key={location.pathname} variant={variant}>
+      {children}
+    </TransitionStage>
+  )
 }

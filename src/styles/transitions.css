@@ -1,0 +1,121 @@
+/* Pure CSS GPU-composited route transitions (replaces framer-motion) */
+
+.pt-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pt-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  animation: pt-content-in 0.2s ease-out 0.14s both;
+}
+
+@keyframes pt-content-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pt-layer {
+  position: fixed;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Default horizontal sweep */
+.pt-default-block {
+  inset: 0;
+  transform-origin: left center;
+  animation: pt-default-sweep 0.45s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+@keyframes pt-default-sweep {
+  0% {
+    transform: scaleX(0);
+  }
+  40% {
+    transform: scaleX(1);
+  }
+  60% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+/* About slanted cyan/navy/white panels */
+.pt-about-panel {
+  height: 26vh;
+  clip-path: polygon(0 0, 100% 0, calc(100% - 120px) 100%, 0 100%);
+  transform-origin: left center;
+  animation: pt-about-slide 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pt-about-slide {
+  0% {
+    transform: translate3d(-500px, 0, 0) rotate(-18deg);
+    opacity: 1;
+  }
+  68% {
+    transform: translate3d(20px, 0, 0) rotate(-18deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-18deg);
+    opacity: 0;
+  }
+}
+
+/* Resume slanted cards */
+.pt-resume-card {
+  left: -6vw;
+  width: 78vw;
+  height: 14vh;
+  clip-path: polygon(0 0, 97% 0, 100% 100%, 3% 100%);
+  animation: pt-resume-slide 0.6s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+@keyframes pt-resume-slide {
+  0% {
+    transform: translate3d(-900px, 0, 0);
+  }
+  48% {
+    transform: translate3d(30px, 0, 0);
+  }
+  70% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(900px, 0, 0);
+  }
+}
+
+/* Socials vertical skewed stripes */
+.pt-socials-stripe {
+  top: -6vh;
+  height: 112vh;
+  transform-origin: top;
+  animation: pt-socials-slide 0.56s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+
+@keyframes pt-socials-slide {
+  0% {
+    transform: translate3d(0, -1200px, 0) skewX(-16deg);
+  }
+  42% {
+    transform: translate3d(0, 0, 0) skewX(-16deg);
+  }
+  58% {
+    transform: translate3d(0, 0, 0) skewX(-16deg);
+  }
+  100% {
+    transform: translate3d(0, 1200px, 0) skewX(-16deg);
+  }
+}

@@ -98,7 +98,8 @@ function createMediaPlugin(mediaBaseUrl) {
   about: ${JSON.stringify(`${base}/${MEDIA_FILES.about}`)},
   resume: ${JSON.stringify(`${base}/${MEDIA_FILES.resume}`)},
   socials: ${JSON.stringify(`${base}/${MEDIA_FILES.socials}`)},
-};\n`
+};
+export const STATS_URL = ${JSON.stringify(`${base}/stats.json`)};\n`
       }
 
       if (!isBuild) {
@@ -107,14 +108,16 @@ function createMediaPlugin(mediaBaseUrl) {
   about: '/__media__/${MEDIA_FILES.about}',
   resume: '/__media__/${MEDIA_FILES.resume}',
   socials: '/__media__/${MEDIA_FILES.socials}',
-};\n`
+};
+export const STATS_URL = '';\n`
       }
 
       return `import home from '/src/assets/${MEDIA_FILES.home}';
 import about from '/src/assets/${MEDIA_FILES.about}';
 import resume from '/src/assets/${MEDIA_FILES.resume}';
 import socials from '/src/assets/${MEDIA_FILES.socials}';
-export const VIDEO_URLS = { home, about, resume, socials };\n`
+export const VIDEO_URLS = { home, about, resume, socials };
+export const STATS_URL = '';\n`
     },
     transformIndexHtml(html) {
       if (!mediaBaseUrl) return html

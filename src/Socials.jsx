@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { STATS_URL } from 'virtual:media'
 import char1 from './assets/char1.png'
 import char2 from './assets/char2.png'
 import char3 from './assets/char3.png'
@@ -45,7 +46,7 @@ const ITEMS = [
     icon: '📷',
     barIcon: icon2,
     stats: [
-      { tag: 'FOL', value: '66', color: '#e1306c' },
+      { tag: 'FOL', value: '336', color: '#e1306c' },
       { tag: 'IG', value: 'MAIN', color: '#f77737' },
     ],
     entries: [
@@ -76,6 +77,7 @@ export default function Socials() {
   const [mounted, setMounted] = useState(false)
   const [activeInfoBar, setActiveInfoBar] = useState(0)
   const [focus, setFocus] = useState('left')
+  const [liveStats, setLiveStats] = useState(null)
   const navigate = useNavigate()
   const isMobileViewport = useIsMobile(768)
 
@@ -84,6 +86,45 @@ export default function Socials() {
   useEffect(() => {
     stateRef.current = { active, activeInfoBar, focus }
   }, [active, activeInfoBar, focus])
+
+  useEffect(() => {
+    if (!STATS_URL) return
+    const controller = new AbortController()
+    fetch(STATS_URL, { signal: controller.signal, cache: 'no-cache' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && typeof data === 'object') setLiveStats(data)
+      })
+      .catch(() => {})
+    return () => controller.abort()
+  }, [])
+
+  const items = liveStats
+    ? ITEMS.map((item) => {
+        if (item.id === 'twitter' && liveStats.twitter?.followers != null) {
+          return {
+            ...item,
+            stats: [{ ...item.stats[0], value: String(liveStats.twitter.followers) }, item.stats[1]],
+          }
+        }
+        if (item.id === 'instagram' && liveStats.instagram?.followers != null) {
+          return {
+            ...item,
+            stats: [{ ...item.stats[0], value: String(liveStats.instagram.followers) }, item.stats[1]],
+          }
+        }
+        if (item.id === 'osu' && (liveStats.osu?.rank != null || liveStats.osu?.pp != null)) {
+          return {
+            ...item,
+            stats: [
+              { ...item.stats[0], value: String(liveStats.osu.rank ?? item.stats[0].value) },
+              { ...item.stats[1], value: String(liveStats.osu.pp ?? item.stats[1].value) },
+            ],
+          }
+        }
+        return item
+      })
+    : ITEMS
 
   const selectPlatform = (index) => {
     setActive(index)
@@ -130,12 +171,12 @@ export default function Socials() {
     return () => window.removeEventListener('keydown', onKey)
   }, [navigate])
 
-  const currentEntries = ITEMS[active].entries
+  const currentEntries = items[active].entries
 
   return (
     <div id="menu-screen" className="socials-page">
       <div className="sc-root" role="navigation">
-        {ITEMS.map((item, i) => (
+        {items.map((item, i) => (
           <div
             key={item.id}
             className={`sc-bar-outer${active === i ? ' active' : ''}${mounted ? ' mounted' : ''}`}

@@ -129,7 +129,7 @@ export const VIDEO_URLS = { home, about, resume, socials };\n`
         tags: [
           {
             tag: 'link',
-            attrs: { rel: 'preconnect', href: origin, crossorigin: '' },
+            attrs: { rel: 'preconnect', href: origin },
             injectTo: 'head-prepend',
           },
           {

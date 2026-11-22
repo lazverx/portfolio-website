@@ -12,7 +12,6 @@ const ROUTE_TO_KEY = {
 function VideoLayer({ sceneKey, active, entryReveal }) {
   const sceneRef = useRef(null)
   const videoRef = useRef(null)
-  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     const videoEl = videoRef.current
@@ -22,6 +21,9 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
     videoEl.defaultMuted = true
     videoEl.muted = true
     videoEl.playsInline = true
+    videoEl.setAttribute('muted', '')
+    videoEl.setAttribute('playsinline', '')
+    videoEl.setAttribute('webkit-playsinline', '')
 
     if (!active) {
       videoEl.pause()
@@ -52,18 +54,16 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
           }
           const cleanupGesture = () => {
             window.removeEventListener('pointerdown', onGesture)
+            window.removeEventListener('touchstart', onGesture)
             window.removeEventListener('keydown', onGesture)
             unlockCleanup = null
           }
           window.addEventListener('pointerdown', onGesture, { once: true, passive: true })
+          window.addEventListener('touchstart', onGesture, { once: true, passive: true })
           window.addEventListener('keydown', onGesture, { once: true, passive: true })
           unlockCleanup = cleanupGesture
         })
       }
-    }
-
-    if (videoEl.readyState >= 2) {
-      queueMicrotask(() => setReady(true))
     }
 
     tryPlay()
@@ -73,16 +73,11 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
     }
   }, [active, entryReveal])
 
-  const markReady = () => {
-    setReady((prev) => (prev ? prev : true))
-  }
-
   return (
     <div
       ref={sceneRef}
       className={`bg-scene${active ? ' is-active' : ''}`}
       onAnimationEnd={(e) => e.currentTarget.classList.remove('is-circle-reveal')}
-      aria-hidden="true"
     >
       <img
         className="bg-scene-poster"
@@ -93,17 +88,20 @@ function VideoLayer({ sceneKey, active, entryReveal }) {
       />
       <video
         ref={videoRef}
-        className={`bg-scene-video${ready ? ' is-ready' : ''}`}
+        className="bg-scene-video"
         src={VIDEO_URLS[sceneKey]}
+        poster={POSTER_URLS[sceneKey]}
         autoPlay={active}
         loop
         muted
         playsInline
         preload="auto"
-        onLoadedData={markReady}
-        onCanPlay={markReady}
-        onPlaying={markReady}
-        onTimeUpdate={markReady}
+        onCanPlay={(e) => {
+          if (active && e.currentTarget.paused) {
+            e.currentTarget.muted = true
+            e.currentTarget.play().catch(() => {})
+          }
+        }}
       />
     </div>
   )
@@ -127,7 +125,7 @@ export default function BackgroundVideoStage({ pathname }) {
   const keysToRender = visitedKeys.includes(activeKey) ? visitedKeys : [...visitedKeys, activeKey]
 
   return (
-    <div className="bg-stage" aria-hidden="true">
+    <div className="bg-stage">
       {keysToRender.map((key) => (
         <VideoLayer
           key={key}

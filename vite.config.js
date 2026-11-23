@@ -5,10 +5,15 @@ import react from '@vitejs/plugin-react'
 
 const MEDIA_FILES = {
   home: 'Mainn.mp4',
+  homeCompat: 'Mainn-compat.mp4',
   about: 'main1.mp4',
   resume: 'main2.mp4',
+  resumeFallback: 'main2-h264.mp4',
   socials: 'main3.mp4',
+  socialsFallback: 'main3-h264.mp4',
 }
+
+const MEDIA_VERSION = 'v=2'
 
 function createMediaPlugin(mediaBaseUrl) {
   const virtualId = 'virtual:media'
@@ -93,21 +98,51 @@ function createMediaPlugin(mediaBaseUrl) {
 
       if (mediaBaseUrl) {
         const base = mediaBaseUrl.replace(/\/+$/, '')
+        const url = (f) => `${base}/${f}?${MEDIA_VERSION}`
         return `export const VIDEO_URLS = {
-  home: ${JSON.stringify(`${base}/${MEDIA_FILES.home}`)},
-  about: ${JSON.stringify(`${base}/${MEDIA_FILES.about}`)},
-  resume: ${JSON.stringify(`${base}/${MEDIA_FILES.resume}`)},
-  socials: ${JSON.stringify(`${base}/${MEDIA_FILES.socials}`)},
+  home: ${JSON.stringify(url(MEDIA_FILES.home))},
+  about: ${JSON.stringify(url(MEDIA_FILES.about))},
+  resume: ${JSON.stringify(url(MEDIA_FILES.resume))},
+  socials: ${JSON.stringify(url(MEDIA_FILES.socials))},
+};
+export const VIDEO_SOURCES = {
+  home: {
+    primary: ${JSON.stringify(url(MEDIA_FILES.home))},
+    compat: ${JSON.stringify(url(MEDIA_FILES.homeCompat))},
+    hevc: false,
+  },
+  about: {
+    primary: ${JSON.stringify(url(MEDIA_FILES.about))},
+    compat: ${JSON.stringify(url(MEDIA_FILES.about))},
+    hevc: false,
+  },
+  resume: {
+    primary: ${JSON.stringify(url(MEDIA_FILES.resume))},
+    compat: ${JSON.stringify(url(MEDIA_FILES.resumeFallback))},
+    hevc: true,
+  },
+  socials: {
+    primary: ${JSON.stringify(url(MEDIA_FILES.socials))},
+    compat: ${JSON.stringify(url(MEDIA_FILES.socialsFallback))},
+    hevc: true,
+  },
 };
 export const STATS_URL = ${JSON.stringify(`${base}/stats.json`)};\n`
       }
 
       if (!isBuild) {
+        const url = (f) => `/__media__/${f}`
         return `export const VIDEO_URLS = {
-  home: '/__media__/${MEDIA_FILES.home}',
-  about: '/__media__/${MEDIA_FILES.about}',
-  resume: '/__media__/${MEDIA_FILES.resume}',
-  socials: '/__media__/${MEDIA_FILES.socials}',
+  home: ${JSON.stringify(url(MEDIA_FILES.home))},
+  about: ${JSON.stringify(url(MEDIA_FILES.about))},
+  resume: ${JSON.stringify(url(MEDIA_FILES.resume))},
+  socials: ${JSON.stringify(url(MEDIA_FILES.socials))},
+};
+export const VIDEO_SOURCES = {
+  home: { primary: ${JSON.stringify(url(MEDIA_FILES.home))}, compat: ${JSON.stringify(url(MEDIA_FILES.homeCompat))}, hevc: false },
+  about: { primary: ${JSON.stringify(url(MEDIA_FILES.about))}, compat: ${JSON.stringify(url(MEDIA_FILES.about))}, hevc: false },
+  resume: { primary: ${JSON.stringify(url(MEDIA_FILES.resume))}, compat: ${JSON.stringify(url(MEDIA_FILES.resumeFallback))}, hevc: true },
+  socials: { primary: ${JSON.stringify(url(MEDIA_FILES.socials))}, compat: ${JSON.stringify(url(MEDIA_FILES.socialsFallback))}, hevc: true },
 };
 export const STATS_URL = '';\n`
       }
@@ -117,6 +152,12 @@ import about from '/src/assets/${MEDIA_FILES.about}';
 import resume from '/src/assets/${MEDIA_FILES.resume}';
 import socials from '/src/assets/${MEDIA_FILES.socials}';
 export const VIDEO_URLS = { home, about, resume, socials };
+export const VIDEO_SOURCES = {
+  home: { primary: home, compat: home, hevc: false },
+  about: { primary: about, compat: about, hevc: false },
+  resume: { primary: resume, compat: resume, hevc: true },
+  socials: { primary: socials, compat: socials, hevc: true },
+};
 export const STATS_URL = '';\n`
     },
     transformIndexHtml(html) {

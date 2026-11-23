@@ -12,7 +12,15 @@ if (!bucket) {
 const rootDir = process.cwd()
 const r2Dir = path.join(rootDir, 'media-r2')
 const fallbackDir = path.join(rootDir, 'src', 'assets')
-const files = ['Mainn.mp4', 'main1.mp4', 'main2.mp4', 'main3.mp4']
+const files = [
+  'Mainn.mp4',
+  'Mainn-compat.mp4',
+  'main1.mp4',
+  'main2.mp4',
+  'main2-h264.mp4',
+  'main3.mp4',
+  'main3-h264.mp4',
+]
 
 const npxCmd = process.platform === 'win32' ? 'npx.cmd' : 'npx'
 
@@ -45,9 +53,10 @@ for (const file of files) {
     '--remote',
   ]
 
-  const res = process.platform === 'win32'
-    ? spawnSync(`${npxCmd} ${args.map(quoteArg).join(' ')}`, { stdio: 'inherit', shell: true })
-    : spawnSync(npxCmd, args, { stdio: 'inherit' })
+  const res =
+    process.platform === 'win32'
+      ? spawnSync(`${npxCmd} ${args.map(quoteArg).join(' ')}`, { stdio: 'inherit', shell: true })
+      : spawnSync(npxCmd, args, { stdio: 'inherit' })
 
   if (res.error || res.status !== 0) {
     if (res.error) console.error('[r2:upload] Spawn error:', res.error.message)
@@ -56,5 +65,4 @@ for (const file of files) {
   }
 }
 
-console.log('\n[r2:upload] All 4 videos uploaded with 1-year immutable CDN cache headers!')
-console.log('[r2:upload] Next step: set VITE_MEDIA_BASE_URL in Vercel Environment Variables to your R2 public/custom domain.')
+console.log('\n[r2:upload] All videos uploaded with 1-year immutable CDN cache headers!')

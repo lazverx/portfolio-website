@@ -29,12 +29,15 @@ function createMediaPlugin(mediaBaseUrl) {
 
   function createRangeMiddleware() {
     return (req, res, next) => {
-      if (!req.url || !req.url.startsWith('/__media__/')) return next()
-      const requested = path.basename(decodeURIComponent(req.url.slice('/__media__/'.length).split('?')[0]))
+      if (!req.url) return next()
+      let prefix = ''
+      if (req.url.startsWith('/__media__/')) prefix = '/__media__/'
+      else if (req.url.startsWith('/media/')) prefix = '/media/'
+      else return next()
+
+      const requested = path.basename(decodeURIComponent(req.url.slice(prefix.length).split('?')[0]))
       if (!Object.values(MEDIA_FILES).includes(requested)) {
-        res.statusCode = 404
-        res.end('Not found')
-        return
+        return next()
       }
 
       const filePath = resolveLocalMediaFile(requested)

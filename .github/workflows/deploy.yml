@@ -36,6 +36,16 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Fetch faststart & compat media from R2 into dist/media
+        run: |
+          mkdir -p dist/media
+          R2_BASE="https://pub-7c7450a65cad41fa9d91885584371a24.r2.dev"
+          for f in Mainn.mp4 Mainn-compat.mp4 main1.mp4 main2.mp4 main2-h264.mp4 main3.mp4 main3-h264.mp4 stats.json; do
+            echo "Fetching $f..."
+            curl -fSL --retry 3 "$R2_BASE/$f" -o "dist/media/$f"
+          done
+          ls -lh dist/media
+
       - name: SPA Fallback for GitHub Pages
         run: cp dist/index.html dist/404.html
 
